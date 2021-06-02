@@ -1,4 +1,7 @@
 package com.etherapy.etherapyproject.repository;
 
-public interface AdminRepository {
+import com.etherapy.etherapyproject.model.Admin;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AdminRepository extends JpaRepository<Admin, Long> {
 }
