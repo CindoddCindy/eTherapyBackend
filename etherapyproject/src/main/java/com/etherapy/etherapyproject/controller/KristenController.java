@@ -1,9 +1,7 @@
 package com.etherapy.etherapyproject.controller;
 
 import com.etherapy.etherapyproject.exception.ResourceNotFoundException;
-import com.etherapy.etherapyproject.model.Game;
 import com.etherapy.etherapyproject.model.Kristen;
-import com.etherapy.etherapyproject.repository.GameRepository;
 import com.etherapy.etherapyproject.repository.KristenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
