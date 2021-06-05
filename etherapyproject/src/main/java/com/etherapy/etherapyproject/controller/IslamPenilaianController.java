@@ -2,9 +2,7 @@ package com.etherapy.etherapyproject.controller;
 
 
 import com.etherapy.etherapyproject.exception.ResourceNotFoundException;
-import com.etherapy.etherapyproject.model.PenilaianMuslim;
 import com.etherapy.etherapyproject.repository.MuslimRepository;
-import com.etherapy.etherapyproject.repository.PenilaianMuslimRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

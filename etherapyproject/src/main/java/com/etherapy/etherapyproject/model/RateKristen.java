@@ -7,23 +7,23 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "penilaianmuslim")
-public class PenilaianMuslim extends AuditModel{
+@Table(name = "rate_kristen")
+public class RateKristen extends AuditModel{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Lob
-    private int rateM;
+    private int rateK;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "muslim_id", nullable = false)
+    @JoinColumn(name = "kristen_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Muslim muslim;
+    private Kristen kristen;
 
-    public PenilaianMuslim() {
+    public RateKristen() {
     }
 
     public Long getId() {
@@ -34,19 +34,19 @@ public class PenilaianMuslim extends AuditModel{
         this.id = id;
     }
 
-    public int getRateM() {
-        return rateM;
+    public int getRateK() {
+        return rateK;
     }
 
-    public void setRateM(int rateM) {
-        this.rateM = rateM;
+    public void setRateK(int rateK) {
+        this.rateK = rateK;
     }
 
-    public Muslim getMuslim() {
-        return muslim;
+    public Kristen getKristen() {
+        return kristen;
     }
 
-    public void setMuslim(Muslim muslim) {
-        this.muslim = muslim;
+    public void setKristen(Kristen kristen) {
+        this.kristen = kristen;
     }
 }

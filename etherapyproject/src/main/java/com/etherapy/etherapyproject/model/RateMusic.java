@@ -8,8 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "penilaianmusic")
-public class PenilaianMusic extends AuditModel{
+@Table(name = "rate_music")
+public class RateMusic extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
@@ -23,7 +23,7 @@ public class PenilaianMusic extends AuditModel{
     @JsonIgnore
     private Music music;
 
-    public PenilaianMusic() {
+    public RateMusic() {
     }
 
     public String getId() {
