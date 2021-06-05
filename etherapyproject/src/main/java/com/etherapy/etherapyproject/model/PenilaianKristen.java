@@ -7,7 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "penilaiankristen")
 public class PenilaianKristen extends AuditModel{
 
     @Id
@@ -15,12 +15,38 @@ public class PenilaianKristen extends AuditModel{
     private Long id;
 
     @NotNull
-    @Lob
-    private String text;
+    private int rateK;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "kristen_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Post post;
+    private Kristen kristen;
+
+    public PenilaianKristen() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getRateK() {
+        return rateK;
+    }
+
+    public void setRateK(int rateK) {
+        this.rateK = rateK;
+    }
+
+    public Kristen getKristen() {
+        return kristen;
+    }
+
+    public void setKristen(Kristen kristen) {
+        this.kristen = kristen;
+    }
 }
