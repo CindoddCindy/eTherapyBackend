@@ -1,6 +1,10 @@
 package com.etherapy.etherapyproject.controller;
 
 
+import com.etherapy.etherapyproject.exception.ResourceNotFoundException;
+import com.etherapy.etherapyproject.model.PenilaianMuslim;
+import com.etherapy.etherapyproject.repository.MuslimRepository;
+import com.etherapy.etherapyproject.repository.PenilaianMuslimRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,46 +17,46 @@ import javax.validation.Valid;
 public class IslamPenilaianController {
 
     @Autowired
-    private CommentRepository commentRepository;
+    private PenilaianMuslimRepository penilaianMuslimRepository;
 
     @Autowired
-    private PostRepository postRepository;
+    private MuslimRepository muslimRepository;
 
-    @GetMapping("/posts/{postId}/comments")
-    public Page<Comment> getAllCommentsByPostId(@PathVariable (value = "postId") Long postId,
-                                                Pageable pageable) {
-        return commentRepository.findByPostId(postId, pageable);
+    @GetMapping("/muslim/{muslimId}/penilaianmuslim")
+    public Page<PenilaianMuslim> getAllPenilainByMuslimId(@PathVariable (value = "muslimId") Long muslimId,
+                                                        Pageable pageable) {
+        return penilaianMuslimRepository.findByMuslimId(muslimId, pageable);
     }
 
-    @PostMapping("/posts/{postId}/comments")
-    public Comment createComment(@PathVariable (value = "postId") Long postId,
-                                 @Valid @RequestBody Comment comment) {
-        return postRepository.findById(postId).map(post -> {
-            comment.setPost(post);
-            return commentRepository.save(comment);
-        }).orElseThrow(() -> new ResourceNotFoundException("PostId " + postId + " not found"));
+    @PostMapping("/muslim/{muslimId}/penilaianmuslim")
+    public PenilaianMuslim createPenilaian(@PathVariable (value = "muslimId") Long muslimId,
+                                 @Valid @RequestBody PenilaianMuslim penilaianMuslim) {
+        return muslimRepository.findById(muslimId).map(muslim -> {
+            penilaianMuslim.setMuslim(muslim);
+            return penilaianMuslimRepository.save(penilaianMuslim);
+        }).orElseThrow(() -> new ResourceNotFoundException("MuslimId " + muslimId + " not found"));
     }
 
-    @PutMapping("/posts/{postId}/comments/{commentId}")
-    public Comment updateComment(@PathVariable (value = "postId") Long postId,
-                                 @PathVariable (value = "commentId") Long commentId,
-                                 @Valid @RequestBody Comment commentRequest) {
-        if(!postRepository.existsById(postId)) {
-            throw new ResourceNotFoundException("PostId " + postId + " not found");
+    @PutMapping("/muslim/{muslimId}/penilaianmuslim/{penilaianMuslimId}")
+    public PenilaianMuslim updatePenilaianMuslim(@PathVariable (value = "muslimId") Long muslimId,
+                                 @PathVariable (value = "penilaianMuslimId") Long penilaianMuslimId,
+                                 @Valid @RequestBody PenilaianMuslim penilaianMuslimRequest) {
+        if(!muslimRepository.existsById(muslimId)) {
+            throw new ResourceNotFoundException("MuslimId " + muslimId + " not found");
         }
 
-        return commentRepository.findById(commentId).map(comment -> {
-            comment.setText(commentRequest.getText());
-            return commentRepository.save(comment);
-        }).orElseThrow(() -> new ResourceNotFoundException("CommentId " + commentId + "not found"));
+        return penilaianMuslimRepository.findById(penilaianMuslimId).map(penilaianMuslim -> {
+            penilaianMuslim.setRateM(penilaianMuslim.getRateM());
+            return penilaianMuslimRepository.save(penilaianMuslim);
+        }).orElseThrow(() -> new ResourceNotFoundException("Penilaian" + penilaianMuslimId + "not found"));
     }
 
-    @DeleteMapping("/posts/{postId}/comments/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable (value = "postId") Long postId,
-                                           @PathVariable (value = "commentId") Long commentId) {
-        return commentRepository.findByIdAndPostId(commentId, postId).map(comment -> {
-            commentRepository.delete(comment);
+    @DeleteMapping("/muslim/{muslimId}/penilaianmuslim/{penilaianMuslimId}")
+    public ResponseEntity<?> deletePenilaianMuslim(@PathVariable (value = "muslimId") Long muslimId,
+                                           @PathVariable (value = "penilaianMuslimId") Long penilaianMuslimId) {
+        return penilaianMuslimRepository.findByIdAndMuslimId(penilaianMuslimId, muslimId).map(penilaianMuslim -> {
+            penilaianMuslimRepository.delete(penilaianMuslim);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Comment not found with id " + commentId + " and postId " + postId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Penilaian Muslim not found with id " + penilaianMuslimId + " and postId " + muslimId));
     }
 }
