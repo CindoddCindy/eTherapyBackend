@@ -14,7 +14,6 @@ public class RateMuslim extends AuditModel{
     private Long id;
 
     @NotNull
-    @Lob
     private int rateM;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

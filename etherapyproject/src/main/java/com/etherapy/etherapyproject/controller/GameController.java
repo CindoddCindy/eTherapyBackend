@@ -30,9 +30,12 @@ public class GameController {
     @PutMapping("/game/{gameId}")
     public Game updateGame(@PathVariable Long postId, @Valid @RequestBody Game gameRequest) {
         return gameRepository.findById(postId).map(game -> {
-            game.setTitle(gameRequest.getTitle());
-            game.setDescription(gameRequest.getDescription());
             game.setContent(gameRequest.getContent());
+            game.setAnswA(gameRequest.getAnswA());
+            game.setAnswB(gameRequest.getAnswB());
+            game.setAnswC(gameRequest.getAnswC());
+            game.setAnswD(gameRequest.getAnswD());
+
             return gameRepository.save(game);
         }).orElseThrow(() -> new ResourceNotFoundException("GameId " + postId + " not found"));
     }

@@ -13,16 +13,20 @@ public class Game extends AuditModel{
     private Long id;
 
     @NotNull
-    @Size(max = 100)
-    @Column(unique = true)
-    private String title;
-
-    @NotNull
-    @Size(max = 250)
-    private String description;
-
-    @NotNull
     private String content;
+
+    @NotNull
+    private String answA;
+
+    @NotNull
+    private String answB;
+
+    @NotNull
+    private String answC;
+
+    @NotNull
+    private String answD;
+
 
     public Game() {
     }
@@ -35,27 +39,43 @@ public class Game extends AuditModel{
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getAnswA() {
+        return answA;
+    }
+
+    public void setAnswA(String answA) {
+        this.answA = answA;
+    }
+
+    public String getAnswB() {
+        return answB;
+    }
+
+    public void setAnswB(String answB) {
+        this.answB = answB;
+    }
+
+    public String getAnswC() {
+        return answC;
+    }
+
+    public void setAnswC(String answC) {
+        this.answC = answC;
+    }
+
+    public String getAnswD() {
+        return answD;
+    }
+
+    public void setAnswD(String answD) {
+        this.answD = answD;
     }
 }

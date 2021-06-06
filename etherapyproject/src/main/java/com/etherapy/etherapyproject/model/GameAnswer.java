@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "gameanswer")
@@ -13,14 +14,16 @@ public class GameAnswer  extends AuditModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Nullable
     private String answerA;
 
-    @NotNull
+    @Nullable
     private String answerB;
-    @NotNull
+
+    @Nullable
     private String answerC;
-    @NotNull
+
+    @Nullable
     private String answerD;
 
 
