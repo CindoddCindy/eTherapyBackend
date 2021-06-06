@@ -1,9 +1,8 @@
-package com.etherapy.etherapyproject.controller;
 
+package com.etherapy.etherapyproject.controller;
 
 import com.etherapy.etherapyproject.exception.ResourceNotFoundException;
 import com.etherapy.etherapyproject.model.RateMusic;
-import com.etherapy.etherapyproject.music.repository.MusicRepository;
 import com.etherapy.etherapyproject.repository.RateMusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,44 +18,35 @@ public class RateMusicController {
     @Autowired
     private RateMusicRepository rateMusicRepository;
 
-    @Autowired
-    private MusicRepository musicRepository;
-
-    @GetMapping("/music/{musicId}/rateMusic")
-    public Page<RateMusic> getAllRateByMusicId(@PathVariable (value = "musicId") String musicId,
-                                                    Pageable pageable) {
-        return rateMusicRepository.findByMusicId(musicId, pageable);
+    @GetMapping("/rateMusic")
+    public Page<RateMusic> getAllMusic(Pageable pageable) {
+        return rateMusicRepository.findAll(pageable);
     }
 
-    @PostMapping("/music/{musicId}/rateMusic")
-    public RateMusic createRate(@PathVariable (value = "musicId") String musicId,
-                                 @Valid @RequestBody RateMusic rateMusic) {
-        return musicRepository.findById(musicId).map(music -> {
-            rateMusic.setMusic(music);
+    @PostMapping("/rateMusic")
+    public RateMusic createPost(@Valid @RequestBody RateMusic rateMusic) {
+        return rateMusicRepository.save(rateMusic);
+    }
+
+    @PutMapping("/rateMusic/(rateMusicId}")
+    public RateMusic updateMusic(@PathVariable Long rateMusicId, @Valid @RequestBody RateMusic rateMusicRequest) {
+        return rateMusicRepository.findById(rateMusicId).map(rateMusic -> {
+            rateMusic.setMusicName(rateMusicRequest.getMusicName());
+            rateMusic.setRateMusic(rateMusicRequest.getRateMusic());
             return rateMusicRepository.save(rateMusic);
-        }).orElseThrow(() -> new ResourceNotFoundException("MusicId " + musicId + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("rateMusicId " + rateMusicId+ " not found"));
     }
 
-    @PutMapping("/music/{musicId}/rateMusic/{rateMusicId}")
-    public RateMusic updateRate(@PathVariable (value = "musicId") String musicId,
-                                 @PathVariable (value = "rateMusicId") String rateMusicId,
-                                 @Valid @RequestBody RateMusic rateMusicRequest) {
-        if(!musicRepository.existsById(musicId)) {
-            throw new ResourceNotFoundException("MusicId " + musicId + " not found");
-        }
 
-        return rateMusicRepository.findById(rateMusicId).map(penilaianMusic -> {
-            penilaianMusic.setRate(rateMusicRequest.getRate());
-            return rateMusicRepository.save(penilaianMusic);
-        }).orElseThrow(() -> new ResourceNotFoundException("RateId " + rateMusicId + "not found"));
-    }
-
-    @DeleteMapping("/music/{musicId}/rateMusic/{rateMusicId}")
-    public ResponseEntity<?> deleteRate(@PathVariable (value = "musicId") String musicId,
-                                           @PathVariable (value = "rateMusicId") String rateMusicId) {
-        return rateMusicRepository.findByIdAndMusicId(rateMusicId, musicId).map(rateMusic ->  {
+    @DeleteMapping("/rateMusic/{rateMusicId}")
+    public ResponseEntity<?> deletePost(@PathVariable Long rateMusicId) {
+        return rateMusicRepository.findById(rateMusicId).map(rateMusic -> {
             rateMusicRepository.delete(rateMusic);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Penilaian  not found with id " + rateMusicId + " and postId " + musicId));
+        }).orElseThrow(() -> new ResourceNotFoundException("rateMusicId " + rateMusicId + " not found"));
     }
+
+
 }
+
+

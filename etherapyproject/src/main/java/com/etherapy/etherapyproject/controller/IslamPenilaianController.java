@@ -2,7 +2,9 @@ package com.etherapy.etherapyproject.controller;
 
 
 import com.etherapy.etherapyproject.exception.ResourceNotFoundException;
+import com.etherapy.etherapyproject.model.RateMuslim;
 import com.etherapy.etherapyproject.repository.MuslimRepository;
+import com.etherapy.etherapyproject.repository.RateMuslimRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,46 +17,46 @@ import javax.validation.Valid;
 public class IslamPenilaianController {
 
     @Autowired
-    private PenilaianMuslimRepository penilaianMuslimRepository;
+    private RateMuslimRepository rateMuslimRepository;
 
     @Autowired
     private MuslimRepository muslimRepository;
 
-    @GetMapping("/muslim/{muslimId}/penilaianmuslim")
-    public Page<PenilaianMuslim> getAllPenilainByMuslimId(@PathVariable (value = "muslimId") Long muslimId,
-                                                        Pageable pageable) {
-        return penilaianMuslimRepository.findByMuslimId(muslimId, pageable);
+    @GetMapping("/muslim/{muslimId}/rateMuslim")
+    public Page<RateMuslim> getAllRateByMuslimId(@PathVariable (value = "muslimId") Long muslimId,
+                                                     Pageable pageable) {
+        return rateMuslimRepository.findByMuslimId(muslimId, pageable);
     }
 
-    @PostMapping("/muslim/{muslimId}/penilaianmuslim")
-    public PenilaianMuslim createPenilaian(@PathVariable (value = "muslimId") Long muslimId,
-                                 @Valid @RequestBody PenilaianMuslim penilaianMuslim) {
+    @PostMapping("/muslim/{muslimId}/rateMuslim")
+    public RateMuslim createRate(@PathVariable (value = "muslimId") Long muslimId,
+                                 @Valid @RequestBody RateMuslim rateMuslim) {
         return muslimRepository.findById(muslimId).map(muslim -> {
-            penilaianMuslim.setMuslim(muslim);
-            return penilaianMuslimRepository.save(penilaianMuslim);
+            rateMuslim.setMuslim(muslim);
+            return rateMuslimRepository.save(rateMuslim);
         }).orElseThrow(() -> new ResourceNotFoundException("MuslimId " + muslimId + " not found"));
     }
 
-    @PutMapping("/muslim/{muslimId}/penilaianmuslim/{penilaianMuslimId}")
-    public PenilaianMuslim updatePenilaianMuslim(@PathVariable (value = "muslimId") Long muslimId,
-                                 @PathVariable (value = "penilaianMuslimId") Long penilaianMuslimId,
-                                 @Valid @RequestBody PenilaianMuslim penilaianMuslimRequest) {
+    @PutMapping("/muslim/{muslimId}/rateMuslim/{rateMuslimId}")
+    public RateMuslim updateRateMuslim(@PathVariable (value = "muslimId") Long muslimId,
+                                 @PathVariable (value = "rateMuslimId") Long rateMuslimId,
+                                 @Valid @RequestBody RateMuslim rateMuslimRequest) {
         if(!muslimRepository.existsById(muslimId)) {
             throw new ResourceNotFoundException("MuslimId " + muslimId + " not found");
         }
 
-        return penilaianMuslimRepository.findById(penilaianMuslimId).map(penilaianMuslim -> {
-            penilaianMuslim.setRateM(penilaianMuslim.getRateM());
-            return penilaianMuslimRepository.save(penilaianMuslim);
-        }).orElseThrow(() -> new ResourceNotFoundException("Penilaian" + penilaianMuslimId + "not found"));
+        return rateMuslimRepository.findById(rateMuslimId).map(rateMuslim -> {
+            rateMuslim.setRateM(rateMuslimRequest.getRateM());
+            return rateMuslimRepository.save(rateMuslim);
+        }).orElseThrow(() -> new ResourceNotFoundException("Rate" + rateMuslimId + "not found"));
     }
 
-    @DeleteMapping("/muslim/{muslimId}/penilaianmuslim/{penilaianMuslimId}")
-    public ResponseEntity<?> deletePenilaianMuslim(@PathVariable (value = "muslimId") Long muslimId,
-                                           @PathVariable (value = "penilaianMuslimId") Long penilaianMuslimId) {
-        return penilaianMuslimRepository.findByIdAndMuslimId(penilaianMuslimId, muslimId).map(penilaianMuslim -> {
-            penilaianMuslimRepository.delete(penilaianMuslim);
+    @DeleteMapping("/muslim/{muslimId}/rateMuslim/{rateMuslimId}")
+    public ResponseEntity<?> deleteRateMuslim(@PathVariable (value = "muslimId") Long muslimId,
+                                           @PathVariable (value = "rateMuslimId") Long rateMuslimId) {
+        return rateMuslimRepository.findByIdAndMuslimId(rateMuslimId, muslimId).map(rateMuslim -> {
+            rateMuslimRepository.delete(rateMuslim);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Penilaian Muslim not found with id " + penilaianMuslimId + " and postId " + muslimId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Rate Muslim not found with id " + rateMuslimId + " and postId " + muslimId));
     }
 }

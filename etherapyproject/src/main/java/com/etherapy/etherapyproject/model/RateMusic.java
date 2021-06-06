@@ -12,41 +12,38 @@ import org.hibernate.annotations.OnDeleteAction;
 public class RateMusic extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @NotNull
-    private String rate;
+    private String musicName;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "music_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Music music;
+    @NotNull
+    private int rateMusic;
 
     public RateMusic() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getRate() {
-        return rate;
+    public String getMusicName() {
+        return musicName;
     }
 
-    public void setRate(String rate) {
-        this.rate = rate;
+    public void setMusicName(String musicName) {
+        this.musicName = musicName;
     }
 
-    public Music getMusic() {
-        return music;
+    public int getRateMusic() {
+        return rateMusic;
     }
 
-    public void setMusic(Music music) {
-        this.music = music;
+    public void setRateMusic(int rateMusic) {
+        this.rateMusic = rateMusic;
     }
 }
